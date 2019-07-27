@@ -1,7 +1,9 @@
 ---
 title: "About"
 date: 2019-07-26T17:47:58+08:00
-draft: true
+draft: false
+
+url: /about/index.html
 
 ---
 
@@ -29,6 +31,6 @@ Leighj
 
 努力赚奶粉钱
 
-滴
+未完待续
 
-五好青年
+...
