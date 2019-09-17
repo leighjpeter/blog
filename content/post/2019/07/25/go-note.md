@@ -1,6 +1,7 @@
 ---
 title: "Go Note"
 date: 2019-07-25T11:11:24+08:00
+lastmod: 2019-08-01T11:11:24+08:00
 draft: false
 keywords: ["golang","学习笔记"]
 description: "golang学习笔记，基础知识，查漏补缺"
@@ -61,18 +62,17 @@ weight: 10
 | interface | | nil | 接口 |
 | function | | nil | 函数 |
 
-
-  ```go
+```go
 // 关键字
 break      default       func     interface   select
 case       defer         go       map         struct
 chan       else          goto     package     switch
 const      fallthrough   if       range       type
 continue   for           import   return      var
-  ```
 
+```
 
-  ```go
+```go
 //  内部预定义字段
 内建常量: true false iota nil
 
@@ -84,12 +84,14 @@ continue   for           import   return      var
 内建函数: make len cap new append copy close delete
         complex real imag
         panic recover
-  ```
+
+ 
+```
 
 
 ### **控制语句**
 
-  ```go
+```go
 
 // for 三种形式
 s := "abc"
@@ -153,7 +155,9 @@ LABEL:
         goto LABEL1
     }
 LABEL1:
-  ```
+
+ 
+```
 
 
 
@@ -161,18 +165,19 @@ LABEL1:
 
 + 初始化的方式
 
-  ```go
+```go
 var numArr01 [3]int = [3]int{1,2,3}
 var numArr02 = [3]int{1,2,3}
 var numArr03 = [...]int{1,2,3}
 var numArr04 = [...]int{1:800,0:900,2:999}
 strArr05 := [...]string{"a","b","c"}
 
-  ```
+ 
+```
 
 + 多维数组
 
-  ```go
+```go
 var arr [2][3]int
 arr[1][1] = 10
 
@@ -188,11 +193,13 @@ const(
 
 type pixel int
 var screen [WIDTH][HEIGHT]pixel
-  ```
+
+ 
+```
 
 + 指向数组的指针和指针数组
 
-  ```go
+```go
 var arr1 = new([5]int)
 var arr2 [5]int
 arr1的类型是*[5]int
@@ -206,64 +213,69 @@ var p *[5]int = &a
 x,y := 1,2
 a := [...]*int{&x,&y}
 
-  ```
+ 
+```
 
 
 
 ### **切片 Slice(引用类型)**
 
-  ```go
-  // 本质是一个数据结构(struct结构体)
-  type slice struct{
-      ptr *[2]int
-      len int
-      cap int
-  }
-  ```
+```go
+// 本质是一个数据结构(struct结构体)
+type slice struct{
+    ptr *[2]int
+    len int
+    cap int
+}
 
-  ```go
-  // 方式1
-  var intArr [5]int = [...]int{1,2,3,4,5,6}
-  slice := intArr[1:3] //左闭右开 slice = [2,3]
-  // 方式2
-  slice_a := make([]type,len,[cap])
-  // 方式3
-  slice_b := []int{1,2,3}
-  var slice_c []string = []string{"tom","leighj"}
-  //
-  var slice []int //创建一个空的slice，cap和len都是0
-  slice == nil //true
-  slice = []int{}
-  slice == nil // false
+ 
+```
+
+```go
+// 方式1
+var intArr [5]int = [...]int{1,2,3,4,5,6}
+slice := intArr[1:3] //左闭右开 slice = [2,3]
+// 方式2
+slice_a := make([]type,len,[cap])
+// 方式3
+slice_b := []int{1,2,3}
+var slice_c []string = []string{"tom","leighj"}
+//
+var slice []int //创建一个空的slice，cap和len都是0
+slice == nil //true
+slice = []int{}
+slice == nil // false
 
 
-  //slice 之间无法比较 不能使用==
+//slice 之间无法比较 不能使用==
 
-  //组成多维数据结构，内部的slice长度可以不一致，这一点和数组不同
-  twoD := make([][]int, 3)
-  for i := 0; i < 3; i++ {
-      innerLen := i + 1
-      twoD[i] = make([]int, innerLen)
-      for j := 0; j < innerLen; j++ {
-          twoD[i][j] = i + j
-      }
-  }
-  ```
+//组成多维数据结构，内部的slice长度可以不一致，这一点和数组不同
+twoD := make([][]int, 3)
+for i := 0; i < 3; i++ {
+    innerLen := i + 1
+    twoD[i] = make([]int, innerLen)
+    for j := 0; j < innerLen; j++ {
+        twoD[i][j] = i + j
+    }
+}
+
+ 
+```
 
 + slice定义完还不能使用，需要引用到一个数组或make一个空间
 
 + append
 
-  ```go
+```go
 //append底层原理：先创建数组阔容，将原来的元素拷贝到新数组，追加新的元素，然后slice重新引用到这个数组
 var slice []int = []int{1,2,3}
 slice = append(slice,4,5,6,7)
 slice = append(slice,slice...)
-  ```
 
+ 
+```
 
-
-  ```go
+```go
 slice := []int{7, 9, 3, 5, 1}
 x := min(slice...)
 fmt.Printf("The minimum in the slice is: %d\n", x)
@@ -283,7 +295,9 @@ func min(s ...int) int {
 // 切片重新分片，只能向后移，不能向前移
 s1 = slice[1:3] // s1=[9,3]
 s2 = s1[0:4] // s2=[9,3,5,1]
-  ```
+
+ 
+```
 
 
 ### **Map(引用类型)**
@@ -294,11 +308,12 @@ s2 = s1[0:4] // s2=[9,3,5,1]
 var a map[string]string
 // 在使用map前一定要先make，这里和数组不同。定义map的时候没有分配内存
 
+ 
 ```
 
 + make
 
-  ```go
+```go
 var map_a map[string]string
 map_a = make(map[string]string,10)
 map_b := make(map[int]string,10)
@@ -312,14 +327,16 @@ studentMap["st1"]["sex"] = "woman"
 studentMap["st1"]["address"] = "北京"
 fmt.Println(studentMap) // map[st1:map[sex:woman address:北京 name:tom]]
 fmt.Println(studentMap["st1"]["address"]) // 北京
-  ```
+
+ 
+```
 
 + map的增删改查
 
   + Key-value形式存储数据，key不会重复，key-value是无序的
   + 键值对不存在时自动添加，使用delete()删除键值对
 
-  ```go
+```go
 // 判断key是否存在
 val,ok := map1[key]
 cities := make(map[string]string)
@@ -334,11 +351,13 @@ if ok {
 }else{
     fmt.Print("not find")
 }
-  ```
+
+ 
+```
 
 + slice of map
 
-  ```go
+```go
 var monsters []map[string]string
 monsters = make([]map[string]string, 2) //slice需要make
 if monsters[0] == nil {
@@ -360,11 +379,13 @@ newMonster := map[string]string{
 
 monsters = append(monsters, newMonster)
 fmt.Println(monsters)
-  ```
+
+ 
+```
 
 + Sort
 
-  ```go
+```go
 // 对map间接排序
 map_a := map[int]string{1: "a", 2: "b", 3: "c", 4: "d", 5: "e"}
 slice_a := make([]int, len(map_a))
@@ -385,11 +406,12 @@ for k, v := range map_1 {
 }
 fmt.Println(map_2)
 
-  ```
+ 
+```
 
 + value 更多的是使用struct
 
-  ```go
+```go
 type Stu struct{
     Name string
     Age int
@@ -407,11 +429,13 @@ for k, v := range students {
     fmt.Printf("student's name=%v\n", v.Name)
     fmt.Println()
 }
-  ```
+
+ 
+```
 
 + Import!
 
-  ```go
+```go
 //当 map 因扩张重新哈希时，各键值项存储位置都会发改变。
 //因此，map被设计成 not addressable。
 //类似 m[1].name 这种期望透过原 value 指针修改成员的行为自然会被禁
@@ -434,7 +458,9 @@ m2 := map[int]*user{
     1:&user{"user1"},
 }
 m2[1].name = "jack" // 返回的是指针复制品。透过指针修改原对象是允许的
-  ```
+
+ 
+```
 
 
 
@@ -457,11 +483,12 @@ type person struct{
 }
 // 如果结构体的字段类型是： 指针，slice，map的零值都是nil，没有分配空间，实用的时候要先make
 
+ 
 ```
 
 + 嵌入结构
 
-  ```go
+```go
 // 匿名结构体
 type human struct {
     Sex int
@@ -479,59 +506,56 @@ type student struct {
 a := teacher{Name:"joe",Age:19,human:human{Sex:0}}
 a := student{Name:"joe",Age:19,human:human{Sex:1}}
 
+ 
+```
 
-  ```
-
-+ 标签
-
-  ```go
-  type Human struct {
-      Sex int 'json:"sex"'
-  }
-  ```
 
 + 创建结构体变量时指定字段值
 
-  ```go
-  type Student struct{
-      Name string
-      Age int
-  }
-  var st1 = Stu{Name:"leighj",Age:30}
-  fmt.Print(st1)
-  // 返回结构体的指针类型
-  var st2 = &Stu{Name:"leighj,Age:30}
-  fmt.Print(*st2)
-  ```
+```go
+type Student struct {
+    Name string
+    Age  int
+}
+var st1 = Student{"leighj", 30}
+fmt.Println(st1) // {leighj 30}
+var st2 = Student{Name: "leighj", Age: 30}
+fmt.Println(st2) // {leighj 30}
+// 返回结构体的指针类型
+var st3 = &Student{Name: "leighj", Age: 30}
+fmt.Println(*st3) // {leighj 30}
+
+ 
+```
 
 + 用工厂模式解决 **没有构造函数** 的问题
 
-  ```go
-  package model
-  type student struct{
-      Name string
-      Score float64
-  }
+```go
+package model
+type student struct{
+    Name string
+    Score float64
+}
 
-  func NewStudent(name string,score float64) *student{
-      return &student{
-          Name:name,
-          Score:score,
-      }
-  }
+func NewStudent(name string,score float64) *student{
+    return &student{
+        Name:name,
+        Score:score,
+    }
+}
 
-  package main
+package main
 
-  import("model")
+import("model")
 
-  vat st = model.NewStudent("leighj",30)
-  fmt.Print(stu)
-  ```
+vat st = model.NewStudent("leighj",30)
+ 
+```
 
 + 类型断言
 
-  ```go
-a.(type)
+```go
+val.(type)
 
 for classifier(items ...interface{}){
     for i,x := range items{
@@ -551,15 +575,19 @@ for classifier(items ...interface{}){
         }
     }
 }
-  ```
+
+ 
+```
 
 + 实现set数据结构
 
-  ```go
-  var null struct{}
-  set := make(map[string]struct{})
-  set["a"] = null
-  ```
+```go
+var null struct{}
+set := make(map[string]struct{})
+set["a"] = null
+
+ 
+```
 
 
 
@@ -570,19 +598,20 @@ for classifier(items ...interface{}){
 
 + 遍历,修改  都需要  将其转换成[]rune或者[]byte，处理后，再转回string。
 
-  ```go
-    s := "abc汉字"
-    for i := 0; i < len(s); i++ { // byte
-        fmt.Printf("%c,", s[i])
-    }
-    fmt.Println()
-    for _, r := range s { // rune
-        fmt.Printf("%c,", r)
-    }
+```go
+s := "abc汉字"
+for i := 0; i < len(s); i++ { // byte
+    fmt.Printf("%c,", s[i])
+}
+fmt.Println()
+for _, r := range s { // rune
+    fmt.Printf("%c,", r)
+}
 
-  // 无论哪种转换都会重现分配内存，并复制字节数组
+// 无论哪种转换都会重现分配内存，并复制字节数组
 
-  ```
+ 
+```
 
 + 字符串转整数 strconv.Atoi()
 
@@ -614,16 +643,16 @@ for classifier(items ...interface{}){
 
 + 前缀后缀 strings.HasPrefix,strings.HasSuffix
 
-  ```
-    func MakeAddSuffix(prefix string) func(string) string {
-        return func(name string) string {
-            if !strings.HasPrefix(name, prefix) {
-                return prefix + name
-            }
-            return name
+```go
+func MakeAddSuffix(prefix string) func(string) string {
+    return func(name string) string {
+        if !strings.HasPrefix(name, prefix) {
+            return prefix + name
         }
+        return name
     }
-  ```
+}
+```
 
 
 
@@ -637,7 +666,7 @@ for classifier(items ...interface{}){
 
 - time.LoadLocation(name string)
 
-  ```go
+```go
 
 var locales map[string]map[string]string
 func date(formate string, t time.Time) string {
@@ -688,9 +717,8 @@ func main(){
     fmt.Println(t.Unix()) // 1564588800 = 2019-08-01 00:00:00
 }
 
-
-
-  ```
+ 
+```
 
 ### **命令行参数**
 
@@ -709,37 +737,43 @@ flag.IntVar(&port,"p",3306,"端口默认3306")
 //important!
 flag.Parse()
 
-
+ 
 ```
 
 ### **文件处理**
 
 + 读文件
 
-  ```
-  os.Open()
-  file.Close()
-  bufio.NewReader()
-  reader.ReadString()
+```go
+os.Open()
+file.Close()
+bufio.NewReader()
+reader.ReadString()
 
-  // 使用ioutil一次将整个文件读入到内存中
-  ioutil.ReadFile
-  ```
+// 使用ioutil一次将整个文件读入到内存中
+ioutil.ReadFile
+
+ 
+```
 
 + 写文件
 
-  ```
-  func OpenFile(name string,flag int, perm FileMode)(file *file,err error)
+```go
+func OpenFile(name string,flag int, perm FileMode)(file *file,err error)
 
-  ioutil.WriteFile(filePath,data,perm FileMode)
-  ```
+ioutil.WriteFile(filePath,data,perm FileMode)
+
+ 
+```
 
 + 判断文件是否存在
 
-  ```
-  os.Stat()
-  os.IsNotExist()
-  ```
+```go
+os.Stat()
+os.IsNotExist()
+
+ 
+```
 
 + io.Copy(writer, reader)
 
@@ -753,7 +787,7 @@ flag.Parse()
 
 + 不支持嵌套，重载和默认参数
 
-  ```go
+```go
 // 一切皆类型
 // 匿名函数
 
@@ -777,9 +811,9 @@ var (
 
 // 闭包函数保存并积累其中的变量的值，不管外部函数退出与否，它都能够继续操作外部函数中的局部变量。
 func closure(x int) func(int) int {
-  return func(y int) int {
-      return x + y
-  }
+    return func(y int) int {
+        return x + y
+    }
 }
 
 var g int
@@ -793,8 +827,8 @@ go func(i int){
 
 println(g) // 0
 
-
-  ```
+ 
+```
 
 ### **defer**
 
@@ -802,7 +836,7 @@ println(g) // 0
 
 + 类似于finally语句块，当函数执行完，可以及时释放某些已分配的资源（最主要的价值）
 
-  ```go
+```go
 func test() {
     file = openfile(filename)
     defer file.Close()
@@ -811,20 +845,22 @@ func test() {
     conn = openDatabase()
     defer conn.Close()
 }
-  ```
+
+ 
+```
 
 + 即使发生严重错误也会执行
 
 + go没有异常机制，但有panic/recover模式来处理错误，panic可以在任何地方引发，但reciver只有在defer调用的函数中有效
 
-  ```go
+```go
 func main(){
-  A()
-  B()
-  C()
+    A()
+    B()
+    C()
 }
 func A(){
-  fmt.Println("func A")
+    fmt.Println("func A")
 }
 func B(){
 defer func(){
@@ -832,17 +868,19 @@ defer func(){
           fmt.Println("recover in B")
       }
 }
-  panic("Panic in B")
+    panic("Panic in B")
 }
 func C(){
-  fmt.Println("func C")
+    fmt.Println("func C")
 }
 
 输出：
 func A
 recover in B
 func C
-  ```
+
+ 
+```
 
 
 
@@ -865,6 +903,7 @@ func func1(){
     where()
 }
 
+ 
 ```
 
 
@@ -877,46 +916,46 @@ func func1(){
 
   + Method和结构体的结合
 
-    ```go
-    type A struct{
-        Name string
-    }
-    type B struct{}
+```go
+type A struct{
+    Name string
+}
+type B struct{}
 
-    func main(){
-        a := A{}
-        a.Print()
-    }
-    // Reciver 可以是值类型／指针
-    func (a A) Print(){
-        fmt.Println("A")
-    }
-    func (a *A) Print(){
-      a.Name = "AA"
-        fmt.Println("A")
-    }
-    ```
+func main(){
+    a := A{}
+    a.Print()
+}
+// Reciver 可以是值类型／指针
+func (a A) Print(){
+    fmt.Println("A")
+}
+func (a *A) Print(){
+  a.Name = "AA"
+    fmt.Println("A")
+}
+
+ 
+```
 
   + Method Value 和 Method Expression
 
-    ```go
-    type TZ int
+```go
+type TZ int
 
-    func (func_a *TZ) Print() {
-      fmt.Println("OK")
-    }
+func (func_a *TZ) Print() {
+  fmt.Println("OK")
+}
 
-    var method_a TZ
-    method_a.Print() // Method Value
-    (*TZ).Print(&method_a) // Method Expression
+var method_a TZ
+method_a.Print() // Method Value
+(*TZ).Print(&method_a) // Method Expression
 
-    // method value 会复制 receiver。
-    ```
+// method value 会复制 receiver。
 
-  + 方法访问权限
+ 
+```
 
-    + 首字母大写是public，小写是private
-    + 方法可以调用结构中的非公开字段
 
 
 ### **接口**
@@ -992,8 +1031,7 @@ func main() {
 
 }
 
-
-
+ 
 ```
 
 
@@ -1004,7 +1042,7 @@ func main() {
 
 + 通过方法，包 实现封装
 
-  ```go
+```go
 type Student struct {
     Name  string
     score float64
@@ -1024,11 +1062,13 @@ func (stu *Student) GetScore() float64 {
 func (stu *Student) SetScore(score float64) {
     stu.score = score
 }
-  ```
+
+ 
+```
 
 + 继承可以解决代码复用
 
-  ```go
+```go
 type Human struct {
     Sex int
 }
@@ -1042,7 +1082,9 @@ type student struct {
     Name string
     Age int
 }
-  ```
+
+ 
+```
 
 + 当结构体和匿名结构体有相同的字段和方法时，编译器采用就近原则。希望访问
     匿名结构体的字段和方法，可以通过匿名结构体名来区分。
@@ -1053,7 +1095,7 @@ type student struct {
 
 + 多态数组
 
-  ```go
+```go
 type USB interface{
   Start()
 }
@@ -1078,7 +1120,8 @@ func main(){
     usbArr[2] = Camera{}
 }
 
-  ```
+ 
+```
 
 
 ## 协程，管道，Select
@@ -1102,26 +1145,27 @@ func main(){
 
 + goroutine会有资源争夺的问题
 
-  ```go
-  //如 concurrent map writes!
+```go
+//如 concurrent map writes!
 
-  解决方案：
-  1 全局变量的互斥锁
-  var (
+解决方案：
+1 全局变量的互斥锁
+var (
     lock sync.Mutex
-  )
-  lock.Lock()
-  ...
-  lock.Unlock()
+)
+lock.Lock()
+...
+lock.Unlock()
 
-  2 使用管道 channel 来解决
+2 使用管道 channel 来解决
 
-  ```
+ 
+```
 
 
 + sync
 
-  ```go
+```go
 func sum(id int) {
     var x int64
     for i := 0; i < math.MaxUint32; i++ {
@@ -1142,9 +1186,10 @@ func main(){
     wg.Wait()
 }
 
-  ```
+ 
+```
 
-  ```go
+```go
 //线程安全的方式创建一些东西的最好选择是 sync.Once
 var once sync.Once
 onceBody := func() {
@@ -1160,7 +1205,9 @@ for i := 0; i < 10; i++ {
 for i := 0; i < 10; i++ {
     <-done
 }
-  ```
+
+ 
+```
 
 
 
@@ -1202,13 +1249,15 @@ go func(){
 for v :=range c {
     fmt.Println(v)
 }
+
+ 
 ```
 
 + channel是goroutine沟通的桥梁，默认是同步阻塞，读和取需要同步
 
 + 异步方式是通过判断缓冲区来决定是否阻塞。如果缓冲区已满，发送被阻塞。缓冲区为空，接受被阻塞
 
-  ```go
+```go
 //有缓存和无缓存的差别
 chan_c := make(chan int)
 go func() {
@@ -1232,14 +1281,18 @@ for{
         break
     }
 }
-  ```
+
+ 
+```
 
 + 可设置单向或者双向通道
 
-  ```go
+```go
 var chan chan<- int // 只能写
 var chan <-chan int // 只能读
-  ```
+
+ 
+```
 
 + 关闭channel：close(channel)  可以继续从关闭的channel中执行读取操作
 
@@ -1254,7 +1307,7 @@ var chan <-chan int // 只能读
 
 + select处理一个或多个channel的发送和接收
 
-  ```go
+```go
 c1,c2 := make(chan int),make(chan string)
 o := make(chan bool)
 go func(){
@@ -1296,13 +1349,15 @@ go func() {
 }()
 // c <- 1 // 注释掉会引发超时
 <-w
-  ```
+
+ 
+```
 
 + 同时有多个可用的channel时按随机顺序处理
 
 + 在goroutine中使用recover，解决协程中出现的panic，导程序奔溃
 
-  ```go
+```go
 
 func test() {
     defer func() {
@@ -1320,7 +1375,9 @@ func main(){
         time.Sleep(time.Second)
     }
 }
-  ```
+
+ 
+```
 
 
 
@@ -1330,7 +1387,7 @@ func main(){
 
 + 如果仅仅是单纯的等待，你需要使用 `time.Sleep`。 定时器有用原因之一就是你可以在定时器失效之前，取消这个定时器。
 
-  ```go
+```go
 timer2 := time.NewTimer(time.Second)
 go func() {
     <-timer2.C
@@ -1363,22 +1420,22 @@ wait.Wait()
 // sleep 2018-06-04 13:07:52.783389811 +0800 CST m=+1.003316644
 // get timer 2018-06-04 13:07:55.784534298 +0800 CST m=+4.004371103
 
-  ```
+ 
+```
 
 + 打点器：想要在固定的时间间隔重复执行。打点器可以和定时器一样被停止
 
-  ```go
+```go
 type Ticker struct {
     C <-chan Time // 周期性传递时间信息的通道
     // 内含隐藏或非导出字段
 }
   // Ticker 保管一个通道，并每隔一段时间向其传递”tick”。
 
-  ```
+ 
+```
 
-
-
-  ```go
+```go
 ticker := time.NewTicker(time.Millisecond * 500)
 go func() {
   for t := range ticker.C {
@@ -1409,7 +1466,9 @@ go func() {
 }()
 wait.Wait()
 fmt.Println("stoped", time.Now())
-  ```
+
+ 
+```
 
 
 
@@ -1462,6 +1521,8 @@ i, err := redis.Int(conn.Do("HGet", "user01", "age"))
 _, err = conn.Do("lpush", "heroList", "no1:宋江", 30, "no2:卢俊义", 28)
 // 因为返回 r 是 interface{} 需要转换
 r, err = redis.String(conn.Do("rpop", "heroList"))
+
+ 
 ```
 
 + 连接池
@@ -1485,6 +1546,7 @@ func main(){
     ...
 }
 
+ 
 ```
 
 
@@ -1497,6 +1559,8 @@ re := regexp.MustCompile("(gopher){2}")
 fmt.Println(re.MatchString("gopher")) //false
 fmt.Println(re.MatchString("gophergopher")) //true
 fmt.Println(re.MatchString("gophergophergopher")) //true
+
+ 
 ```
 
 
@@ -1514,6 +1578,17 @@ fmt.Println(re.MatchString("gophergophergopher")) //true
 
 + 平行测试：如果一个测试情景超过1s就可以参考用平行测试
 
+
+|参数|说明|
+| ---- | ---- |
+| -v | 显示通过的详细测试信息，默认只显示错误信息以及通过的概要 |
+| -c | 生成用于运行测试的可执行文件，但不执行它。这个可执行文件会被命名为“pkg.test”，其中的“pkg”即为被测试代码包的导入路径的最后一个元素的名称。 |
+| -i | 只是安装测试所依赖的包，不会编译执行 |
+| -o | 指定编译生成的可执行文件名 |
+| -bench regexp | 执行相应的 benchmarks，例如 -bench=. |
+| -cover | 开启测试覆盖率 |
+| -run regexp | 只运行 regexp 匹配的函数，例如 -run=Array 那么就执行包含有 Array 开头的函数 |
+
 ### **单元测试**
 
 ### **性能测试Benchmark**
@@ -1522,6 +1597,10 @@ fmt.Println(re.MatchString("gophergophergopher")) //true
 go test -v -bench=. .
 go test -v -bench=. -run=none .
 go test -v -bench=. -run=none -benchmem .
+
+go test -v -bench=. int2str_test.go -benchmem
+go test -bench=. -cpu=1 benchmark/goroutine_test.go
+ 
 ```
 
 
@@ -1647,8 +1726,7 @@ t.Do()
 // type只能使用在interface
 //panic-recover 对重复解锁互斥锁引发的panic却是无用的
 
-
-
+ 
 ```
 
 
@@ -1665,6 +1743,8 @@ func make(t Type, size ...IntegerType) Type
 
 new 计算类型大小，分配零值内存，返回指针。适用于数组和结构体
 make 会被编译器翻译成具体的创建函数，由其分配内存和初始化成员结构，返回对象而非指针。适用于切片、map 和 channel
+
+ 
 ```
 
 ## **Go为数不多的陷阱**
@@ -1680,12 +1760,16 @@ fmt.Println(slice)                  // [2,6,7,8]
 fmt.Println(len(slice), cap(slice)) // 4,4
 fmt.Println(arr)                    // [1,2,6,7,8]
 // 信条: 不对函数slice类型的参数append
+
+ 
 ```
 
 + [参考 Go语言slice的本质-SliceHeader](https://www.flysnow.org/2018/12/21/golang-sliceheader.html)
 
 ```go
-// Go 语言为数不多的陷阱之 闭包
+// Go 语言为数不多的陷阱之闭包
+// 闭包只是带有父函数的上下文（context）的函数
+// 闭包对父函数的context只是引用而不复制
 // Go 的函数返回值是通过堆栈返回的。return语句不是原子操作。
 func f6() (r int) {
     t := 5
@@ -1729,5 +1813,7 @@ func main() {
     return
 }
 // 总结: 1谨记defer和return执行的顺序 2注意返回值是否为闭包引用
+
+ 
 ```
 

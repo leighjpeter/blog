@@ -3,7 +3,7 @@ languageCode = "zh-CN"
 defaultContentLanguage = "zh-cn"                             # en / zh-cn / ... (This field determines which i18n file to use)
 title = "Leighj"
 preserveTaxonomyNames = true
-disablePathToLower = true
+disablePathToLower = true # 禁止将路径全部改为小写
 enableRobotsTXT = true
 enableEmoji = true
 theme = "even"
@@ -17,7 +17,7 @@ pygmentsCodefencesGuessSyntax = true
 
 hasCJKLanguage = true     # has chinese/japanese/korean ? # 自动检测是否包含 中文\日文\韩文
 paginate = 5                                              # 首页每页显示的文章数
-disqusShortname = "leighj"      # disqus_shortname
+disqusShortname = ""      # disqus_shortname
 googleAnalytics = ""      # UA-XXXXXXXX-X
 copyright = ""            # default: author.name ↓        # 默认为下面配置的author.name ↓
 
@@ -66,7 +66,7 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = ""        # default: the title value    # 默认值: 上面设置的title值
-  keywords = ["leighj"]
+  keywords = ["Life","Go","PHP"]
   description = "Daily"
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
@@ -76,10 +76,10 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
   showArchiveCount = false
 
   # The date format to use; for a list of valid formats, see https://gohugo.io/functions/format/
-  dateFormatToUse = "2006-01-02"
+  dateFormatToUse = "2006-01-02 15:04"
 
   # show word count and read time ?                       # 是否显示字数统计与阅读时间
-  moreMeta = false
+  moreMeta = true
 
   # Syntax highlighting by highlight.js
   highlightInClient = false
@@ -143,8 +143,8 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     clientSecret = ""       # Your client secret
 
   [params.utterances]       # https://utteranc.es/
-    owner = ""              # Your GitHub ID
-    repo = ""               # The repo to store comments
+    owner = "leighjpeter"              # Your GitHub ID
+    repo = "leighjpeter/blog"               # The repo to store comments
 
   [params.gitalk]           # Gitalk is a comment system based on GitHub issues. see https://github.com/gitalk/gitalk
     owner = ""              # Your GitHub ID
@@ -180,19 +180,19 @@ copyright = ""            # default: author.name ↓        # 默认为下面配
     pagePV = true
 
   [params.reward]                                         # 文章打赏
-    enable = false
-    wechat = "/path/to/your/wechat-qr-code.png"           # 微信二维码
-    alipay = "/path/to/your/alipay-qr-code.png"           # 支付宝二维码
+    enable = true
+    wechat = "/images/wxpay.jpg"           # 微信二维码
+    alipay = "/images/alipay.jpg"           # 支付宝二维码
 
   [params.social]                                         # 社交链接
-	# a-email = "mailto:your@email.com"
+	a-email = "mailto:leighj@163.com"
 	# b-stack-overflow = "http://localhost:1313"
 	# c-twitter = "http://localhost:1313"
 	# d-facebook = "http://localhost:1313"
 	# e-linkedin = "http://localhost:1313"
 	# f-google = "http://localhost:1313"
 	g-github = "https://github.com/leighjpeter"
-	# h-weibo = "http://localhost:1313"
+	h-weibo = "https://weibo.com/p/1005051803322877"
 	# i-zhihu = "http://localhost:1313"
 	# j-douban = "http://localhost:1313"
 	# k-pocket = "http://localhost:1313"
